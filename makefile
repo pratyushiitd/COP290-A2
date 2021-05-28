@@ -3,6 +3,7 @@ CFLAGS  = -g -Wall
 
 #OBJS specifies which files to compile as part of the project
 OBJS = Game.cpp main.cpp
+#OBJS = win.cpp
 TARGET = main
 
 BUILD_DIR = ./build

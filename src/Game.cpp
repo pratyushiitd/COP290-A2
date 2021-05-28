@@ -22,13 +22,8 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
         running = false;
         return ;
     }
+    SDL_RenderClear(gameRenderer);
     SDL_SetRenderDrawColor(gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    // imgFlags = IMG_INIT_JPG;
-    // if( !( IMG_Init( imgFlags ) & imgFlags ) )
-    // {
-    //     printf( "SDL_image could not initialize! SDL_image Error: %s\n", IMG_GetError() );
-    //     return ;
-    // }
     return;
 }
 
@@ -49,17 +44,13 @@ void Game::handleEvents(){
 }
 
 void Game::render_from_Texture(SDL_Texture *texture){
-    SDL_RenderClear(gameRenderer);
+    
     SDL_RenderCopy(gameRenderer, texture, NULL, NULL);
-    SDL_RenderPresent(gameRenderer);
+    //SDL_RenderPresent(gameRenderer);
 }
 void Game::clear(){
     // SDL_DestroyTexture( texture );
     // texture = NULL;
-
-    SDL_DestroyTexture( TileText );
-    TileText = NULL;
-
     //Destroy window    
     SDL_DestroyWindow( gameWindow );
     gameWindow = NULL;
