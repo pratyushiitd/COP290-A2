@@ -13,16 +13,17 @@ class Game
 {
 private:
     SDL_Window *gameWindow;
-    SDL_Renderer *gameRenderer;
     bool running;
     int imgFlags;
+    int count;
 public:
+    SDL_Renderer *gameRenderer;
     Game();
     ~Game();
     void init(const char *title, int xpos, int ypos, int width, int height, bool flag);
     void handleEvents();
     void update();
-    void render();
+    void Game::render_from_Texture(SDL_Texture *texture);
     void clear();
     bool isRunning();
 };

@@ -34,7 +34,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
 
 void Game::handleEvents(){
     SDL_Event e;
-    if (!SDL_PollEvent( &e )){
+    if (SDL_PollEvent( &e )){
         switch (e.type)
         {
         case SDL_QUIT:
@@ -48,15 +48,17 @@ void Game::handleEvents(){
     return;
 }
 
-void Game::render(){
+void Game::render_from_Texture(SDL_Texture *texture){
     SDL_RenderClear(gameRenderer);
-    /*
-    */
+    SDL_RenderCopy(gameRenderer, texture, NULL, NULL);
     SDL_RenderPresent(gameRenderer);
 }
 void Game::clear(){
     // SDL_DestroyTexture( texture );
     // texture = NULL;
+
+    SDL_DestroyTexture( TileText );
+    TileText = NULL;
 
     //Destroy window    
     SDL_DestroyWindow( gameWindow );
@@ -70,6 +72,8 @@ void Game::clear(){
 }
 Game::Game(){
     //
+    running = true;
+    count = 0;
 }
 
 Game::~Game(){
@@ -82,6 +86,8 @@ bool Game::isRunning(){
 
 void Game::update(){
     //
+    std::cout << count++ << std::endl;
 }
+
 
 

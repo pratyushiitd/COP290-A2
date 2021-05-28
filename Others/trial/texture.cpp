@@ -17,10 +17,6 @@ bool init();
 bool loadMedia();
 void close();
 
-
-
-
-
 bool init(){
     if (SDL_Init(SDL_INIT_VIDEO) < 0){
         printf("SDL couldn't get initialized! SDL Error : %s\n", SDL_GetError());

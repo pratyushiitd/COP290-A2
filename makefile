@@ -2,8 +2,8 @@ CC = g++
 CFLAGS  = -g -Wall
 
 #OBJS specifies which files to compile as part of the project
-OBJS = win.cpp
-TARGET = win
+OBJS = Game.cpp main.cpp
+TARGET = main
 
 BUILD_DIR = ./build
 LIBS:= -lSDL2 -lSDL2_image #`sdl2-config --cflags --libs`
