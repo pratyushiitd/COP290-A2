@@ -1,4 +1,7 @@
 #include "../Resources/Game/Game.hpp"
+#include "../Resources/Game/TextureManager.hpp"
+
+SDL_Renderer* Game::gameRenderer = nullptr;
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool full_scr){
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0){
@@ -33,6 +36,7 @@ void Game::handleEvents(){
         switch (e.type)
         {
         case SDL_QUIT:
+            std::cout << "Requesting to Quit.." << std::endl;
             running = false;
             break;
         
@@ -60,6 +64,7 @@ void Game::clear(){
     //Quit SDL subsystems
     IMG_Quit();
     SDL_Quit();
+    std::cout << "Game Exit Success!" << std::endl;
 }
 Game::Game(){
     //
@@ -77,7 +82,8 @@ bool Game::isRunning(){
 
 void Game::update(){
     //
-    std::cout << count++ << std::endl;
+    count++;
+    
 }
 
 

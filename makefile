@@ -2,7 +2,7 @@ CC = g++
 CFLAGS  = -g -Wall
 
 #OBJS specifies which files to compile as part of the project
-OBJS = Game.cpp main.cpp
+OBJS = Game.cpp TextureManager.cpp Map.cpp main.cpp
 #OBJS = win.cpp
 TARGET = main
 
