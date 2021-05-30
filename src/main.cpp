@@ -1,11 +1,11 @@
 #include "../Resources/Game/TextureManager.hpp"
 #include "../Resources/Game/Map.hpp"
+#include "../Resources/Game/GameObject.hpp"
 
 Game *game = nullptr;
 Map *map = nullptr;
 int SCREEN_WIDTH = 1184;
 int SCREEN_HEIGHT = 1184;
-
 const int FPS = 30;
 const int frameDelay = 1000 / FPS;
 Uint32 frameStart = 0;
@@ -19,19 +19,26 @@ int main(int argc, char *argv[]){
     map = new Map();
     map->LoadMaze();
     std::cout << "Maze Loading Successfull..." << std::endl;
-    map->DrawMap(game->gameRenderer);
-    SDL_RenderPresent(game->gameRenderer);
+    
+    // SDL_RenderPresent(game->gameRenderer);
+
     while(game->isRunning()){
 
         //frameStart = SDL_GetTicks();
 
+        
+        // game->update();
+        // Fill the screen with black
+		SDL_SetRenderDrawColor(game->gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_RenderClear(game->gameRenderer);
+        map->DrawMap(game->gameRenderer);
+		// Render all the objects
         game->handleEvents();
         game->update();
-
-        // frameTime = SDL_GetTicks() - frameStart;
-        // if (frameDelay > frameTime){
-        //     SDL_Delay(frameDelay - frameTime);
-        // }
+        game->render();
+		//game->render();
+		//Update the surface
+		SDL_RenderPresent(game->gameRenderer);
     }
     game->clear();
     return 0;

@@ -13,19 +13,21 @@ class Game
 {
 private:
     SDL_Window *gameWindow;
-    bool running;
+
     int imgFlags;
     int count;
 public:
     static SDL_Renderer *gameRenderer;
+        bool running;
     Game();
     ~Game();
     void init(const char *title, int xpos, int ypos, int width, int height, bool flag);
     void handleEvents();
     void update();
-    void render_from_Texture(SDL_Texture *texture);
+    void render();
     void clear();
     bool isRunning();
+    void closeRequest();
 };
 
 #endif

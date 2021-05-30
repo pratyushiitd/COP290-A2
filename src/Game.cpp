@@ -1,7 +1,9 @@
 #include "../Resources/Game/Game.hpp"
 #include "../Resources/Game/TextureManager.hpp"
+#include "../Resources/Game/GameObject.hpp"
 
 SDL_Renderer* Game::gameRenderer = nullptr;
+GameObject* player = nullptr;
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool full_scr){
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0){
@@ -27,12 +29,13 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     }
     SDL_RenderClear(gameRenderer);
     SDL_SetRenderDrawColor(gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    player = new GameObject("../Resources/player.jpg");
     return;
 }
 
 void Game::handleEvents(){
     SDL_Event e;
-    if (SDL_PollEvent( &e )){
+    while (SDL_PollEvent( &e )){
         switch (e.type)
         {
         case SDL_QUIT:
@@ -43,13 +46,14 @@ void Game::handleEvents(){
         default:
             break;
         }
+        player->handleEvent(e);
     }
     return;
 }
 
-void Game::render_from_Texture(SDL_Texture *texture){
-    
-    SDL_RenderCopy(gameRenderer, texture, NULL, NULL);
+void Game::render(){
+    player->render();
+    //SDL_RenderPresent(Game::gameRenderer);
     //SDL_RenderPresent(gameRenderer);
 }
 void Game::clear(){
@@ -60,7 +64,7 @@ void Game::clear(){
     gameWindow = NULL;
     SDL_DestroyRenderer( gameRenderer );
     gameRenderer = NULL;
-
+    player->Destroy();
     //Quit SDL subsystems
     IMG_Quit();
     SDL_Quit();
@@ -83,7 +87,10 @@ bool Game::isRunning(){
 void Game::update(){
     //
     count++;
-    
+    player->update();
+}
+void Game::closeRequest(){
+    running = false;
 }
 
 
