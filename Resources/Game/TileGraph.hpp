@@ -1,20 +1,27 @@
 #pragma once
+
+#include <array>
 #include "Tile.hpp"
 
 class TileGraph
 {
-private:
-    /* data */
-    int tiles
 public:
-    TileGraph(/* args */);
-    ~TileGraph();
+	TileGraph();
+	~TileGraph();
+
+	// (Re)Creates all tiles
+	void Setup(int w, int h);
+
+	// Returns tile at given position
+	Tile* GetTileAt(int x, int y);
+
+	std::array<Tile*, 4> GetNeighbours(Tile* tile);
+	std::array<Tile*, 8> GetNeighboursDiag(Tile* tile);
+
+private:
+	Tile* tiles;
+	int width;
+	int height;
+
+	int GetIndex(int x, int h);
 };
-
-TileGraph::TileGraph(/* args */)
-{
-}
-
-TileGraph::~TileGraph()
-{
-}

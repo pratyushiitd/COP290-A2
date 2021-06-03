@@ -28,16 +28,19 @@ Map::Map(){
 
 void Map::DrawMap(SDL_Renderer* ren){
     SDL_RenderCopy(ren, backGround, NULL, NULL);
+    //std::cout << x_size << " " << y_size << std::endl;
     for (unsigned int i = 0; i < y_size; i++) {
-
         for (unsigned int j = 0; j < x_size; j++) {
             dest.x = TILE_DIM * j;
             dest.y = TILE_DIM * i;
+                        //std::cout << array_2d[i][j] << " ";
             if (!array_2d[i][j]){
                 SDL_RenderCopy(ren, TileTexture, NULL, &dest);
             }
         }
+        // std::cout << std::endl;
     }
+    // std::cout << std::endl;
 }
 Map::~Map(){}
 

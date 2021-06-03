@@ -25,7 +25,6 @@ int main(int argc, char *argv[]){
     while(game->isRunning()){
 
         //frameStart = SDL_GetTicks();
-
         
         // game->update();
         // Fill the screen with black
@@ -40,6 +39,7 @@ int main(int argc, char *argv[]){
 		//Update the surface
 		SDL_RenderPresent(game->gameRenderer);
     }
+    SDL_Delay(2000);
     game->clear();
     return 0;
 }

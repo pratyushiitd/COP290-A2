@@ -5,12 +5,16 @@ class Tile
 {
 private:
     SDL_Point position;
-    
+    char Type;
+    /*
+    w -> Wall
+    r -> FreePath
+    */
 public:
-    const static int Width = 32;
-	const static int Height = 32;
-
 	Tile();
 	Tile(int x, int y);
     SDL_Point GetPosition();
+    void SetPos(int x, int y);
+    void SetType(char c);
+    char getType();
 };
