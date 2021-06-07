@@ -1,35 +1,118 @@
 #include "../Resources/Game/GameObject.hpp"
 
-#define SPEED 2
 int SCR_WIDTH = 1184;
 int SCR_HEIGHT = 1184;
 int til_DIM = 32;
 
-TileGraph* Tgraph;
+TileGraph* Tgraph = nullptr;
 GameObject::GameObject(const char* texSheet)
 {
-    objTexture = TextureManager::LoadTexture(texSheet, false);
-    dest.w = 32;
-    dest.h = 32;
-    dest.x = 32;
-    dest.y = 32;
-    x_pos = 32;
-    y_pos = 32;
-    Tgraph = new TileGraph();
-    curr_Dir = MOVE_STILL;
+    objTexture = TextureManager::LoadTexture(texSheet); // Pacman texture
+
+	Tgraph = new TileGraph(SCR_HEIGHT / til_DIM, SCR_WIDTH / til_DIM); // Initialize the Tile Map for Player movement
+
+    currTile = Tgraph->GetTileAt(32, 32); // Initialize the starting tile
+	nextTile = NULL;
+
+	if (currTile != NULL) {
+		// currTile->SetPacman(this);
+		
+		position.x = currTile->GetPosition().x * Width;
+		position.y = currTile->GetPosition().y * Height;
+		//Starting coordinates
+	}
+	else {
+		position.x = 32;
+		position.y = 32;
+	}
+
+	collider.w = Width;
+	collider.h = Height;
+
+	moveDir = MOVE_RIGHT;
+	nextDir = MOVE_RIGHT;
+
+    dest.w = til_DIM;
+    dest.h = til_DIM;
+
+	frame = 0;
+	frameCount = 0;
+
+    toDelete_pac = false;
+	LoadMedia();
 }
 
-void GameObject::update()
+// void GameObject::SetTile(Tile* newTile)
+// {
+// 	if (currTile != NULL)
+// 		currTile->SetPacman(NULL);
+
+// 	currTile = newTile;
+	
+// 	if (currTile != NULL) {
+// 		currTile->SetPacman(this);
+
+// 		position.x = currTile->GetPosition().x * Tile::Width;
+// 		position.y = currTile->GetPosition().y * Tile::Height;
+// 	}
+// }
+
+void GameObject::SetNextTile(Tile* newNextTile)
 {
-    std::cout << x_pos << " " << y_pos << std::endl;
-    if (curr_Dir == MOVE_STILL) return;
-    if (curr_Dir == MOVE_RIGHT) x_pos+=SPEED;
-    if (curr_Dir == MOVE_LEFT) x_pos-=SPEED;
-    if (curr_Dir == MOVE_UP) y_pos-=SPEED;
-    if (curr_Dir == MOVE_LEFT) y_pos+=SPEED;
-    dest.x = x_pos;
-    dest.y = y_pos;
-    //if (check_wall())
+	nextTile = newNextTile;
+}
+
+
+bool GameObject::LoadMedia()
+{
+	//if (!pacmanTexture->LoadFromImage("./Resources/PacMan.bmp"))
+	//	return false;
+
+	// Leftward movment animation clips
+	leftAnimClips[0].x = 0;
+    leftAnimClips[0].y = 0;
+    leftAnimClips[0].w = 32;
+    leftAnimClips[0].h = 32;
+
+    leftAnimClips[1].x = 32;
+    leftAnimClips[1].y = 0;
+    leftAnimClips[1].w = 32;
+    leftAnimClips[1].h = 32;
+
+    // Right movement animation clips
+    rightAnimClips[0].x = 0;
+    rightAnimClips[0].y = 32;
+    rightAnimClips[0].w = 32;
+    rightAnimClips[0].h = 32;
+
+    rightAnimClips[1].x = 32;
+    rightAnimClips[1].y = 32;
+    rightAnimClips[1].w = 32;
+    rightAnimClips[1].h = 32;
+
+    // Downward movement animation clips
+    downAnimClips[0].x = 64;
+    downAnimClips[0].y = 0;
+    downAnimClips[0].w = 32;
+    downAnimClips[0].h = 32;
+
+    downAnimClips[1].x = 96;
+    downAnimClips[1].y = 0;
+    downAnimClips[1].w = 32;
+    downAnimClips[1].h = 32;
+
+    // Upward movement animation clips
+    upAnimClips[0].x = 64;
+    upAnimClips[0].y = 32;
+    upAnimClips[0].w = 32;
+    upAnimClips[0].h = 32;
+
+    upAnimClips[1].x = 96;
+    upAnimClips[1].y = 32;
+    upAnimClips[1].w = 32;
+    upAnimClips[1].h = 32;
+
+	return true;
 }
 
 void GameObject::handleEvent(SDL_Event e)
@@ -39,37 +122,113 @@ void GameObject::handleEvent(SDL_Event e)
     if (e.type == SDL_KEYDOWN  && e.key.repeat == 0){
         switch (e.key.keysym.sym){
         case SDLK_UP:
-            curr_Dir = MOVE_UP;
+            next_Dir = MOVE_UP;
             // std::cout << y_pos << std::endl;
             break;
         case SDLK_DOWN:
-            curr_Dir = MOVE_DOWN;
+            next_Dir = MOVE_DOWN;
             // std::cout << y_pos << std::endl;
             break;
         case SDLK_LEFT:
-            curr_Dir = MOVE_LEFT;
+            next_Dir = MOVE_LEFT;
             // std::cout << x_pos << std::endl;
             break;
         case SDLK_RIGHT:
-            curr_Dir = MOVE_RIGHT;
+            next_Dir = MOVE_RIGHT;
             // std::cout << x_pos << std::endl;
             break;
         default:
             break;
         }
-        validateMovement();
+        //validateMovement();
     }
+}
+
+bool GameObject::TryToMove(MoveDirection direction)
+{
+	// Get destination tile depening on the direction of movment
+	// switch (direction)
+	// {
+	// case MOVE_UP:
+	// 	destTile = Tgraph->GetTileAt(currTile->GetPosition().x, currTile->GetPosition().y - 1);
+	// 	break;
+	// case MOVE_DOWN:
+	// 	destTile = Tgraph->GetTileAt(currTile->GetPosition().x, currTile->GetPosition().y + 1);
+	// 	break;
+	// case MOVE_LEFT:
+	// 	destTile = Tgraph->GetTileAt(currTile->GetPosition().x - 1, currTile->GetPosition().y);
+	// 	break;
+	// case MOVE_RIGHT:
+	// 	destTile = Tgraph->GetTileAt(currTile->GetPosition().x + 1, currTile->GetPosition().y);
+	// 	break;
+	// }
+	switch (direction)
+	{
+		case MOVE_UP:
+			if (Tgraph->GetTileAt(position.x, position.y - Velocity + 1)->getType() == 'w'){
+					//|| Tgraph->GetTileAt(position.x + til_DIM, position.y - Velocity)->getType() == 'w'){
+						return false;
+						break;
+					}
+			else{
+				position.y = position.y - Velocity;
+				return true;
+			}
+		case MOVE_DOWN:
+			if (Tgraph->GetTileAt(position.x, position.y + Velocity -1+ til_DIM)->getType() == 'w'){
+					//|| Tgraph->GetTileAt(position.x + til_DIM, position.y + Velocity + til_DIM)->getType() == 'w'){
+						return false;
+						break;
+					}
+			else{
+				position.y += Velocity;
+				return true;
+			}
+		case MOVE_RIGHT:
+			if (Tgraph->GetTileAt(position.x + Velocity-1 + til_DIM, position.y)->getType() == 'w'){
+					//|| Tgraph->GetTileAt(position.x + Velocity + til_DIM, position.y + til_DIM)->getType() == 'w'){
+						return false;
+						break;
+					}
+			else{
+				position.x += Velocity;
+				return true;
+			}
+		case MOVE_LEFT:
+			if (Tgraph->GetTileAt(position.x - Velocity+1, position.y)->getType() == 'w'){
+					//|| Tgraph->GetTileAt(position.x - Velocity, position.y + til_DIM)->getType() == 'w'){
+						return false;
+						break;
+					}
+			else{
+				position.x -= Velocity;
+				return true;
+			}
+
+	}
+
+	// If the tile's NULL, we can't go there
+	// if (destTile == NULL) {
+	// 	SetNextTile(NULL);
+	// 	return false;
+	// }
+
+	// // If the tile has got a wall in it, we can't go there
+	// if (destTile->getType() == 'w') {
+	// 	SetNextTile(NULL);
+	// 	return false;
+	// }
+
+	//SetNextTile(destTile);
+
+	return false;
 }
 
 GameObject::~GameObject()
 {
-
+    
 }
 
-void GameObject::render()
-{
-    SDL_RenderCopy(Game::gameRenderer, objTexture, NULL, &dest);
-}
 
 void GameObject::Destroy()
 {
@@ -77,34 +236,126 @@ void GameObject::Destroy()
     objTexture = NULL;
 }
 
-void GameObject::validateMovement()
+void GameObject::update()
 {
-    if (curr_Dir == MOVE_UP){
-        if (y_pos - SPEED < 0 || Tgraph->GetTileAt(x_pos, y_pos-SPEED)->getType() == 'w'){
-            curr_Dir = MOVE_STILL;
-        }else{
-            y_pos -= SPEED;
-        }
-    }
-    else if (curr_Dir == MOVE_DOWN){
-        if (y_pos+til_DIM+SPEED > SCR_HEIGHT || Tgraph->GetTileAt(x_pos, y_pos+SPEED+til_DIM)->getType() == 'w'){
-            curr_Dir = MOVE_STILL;
-        }else{
-            y_pos += SPEED;
-        }
-    }
-    else if (curr_Dir == MOVE_LEFT){
-        if ( x_pos - SPEED < 0 || Tgraph->GetTileAt(x_pos-SPEED, y_pos)->getType() == 'w'){
-            curr_Dir = MOVE_STILL;
-        }else{
-            x_pos -= SPEED;
-        }
-    }
-    else if (curr_Dir == MOVE_RIGHT){
-        if (x_pos + SPEED + til_DIM > SCR_WIDTH || Tgraph->GetTileAt(x_pos + SPEED + til_DIM, y_pos)->getType() == 'w'){
-            curr_Dir = MOVE_STILL;
-        }else{
-            x_pos += SPEED;
-        }
-    }
+	// Animation of pacman
+	// if (moving) {
+		frameCount++;
+		frame = frameCount / 8;
+
+		if (frame > MoveFrames - 1) {
+			frame = 0;
+			frameCount = 0;
+		}
+	// }
+	
+	// Change of tile/movement
+	// if (nextTile == currTile || nextTile == NULL) {
+	// 	if (nextDir != moveDir && TryToMove(nextDir))
+	// 		moveDir = nextDir;
+	// 	else
+	// 		TryToMove(moveDir);
+
+	// 	if (nextTile == NULL)
+	// 		moving = false;
+// 	else	
+	// 		moving = true;
+	// }
+	// else {
+	// 	switch (moveDir)
+	// 	{
+	// 	case MOVE_UP:
+	// 		position.y = std::max(position.y - Velocity, nextTile->GetPosition().y * Tile::Height);
+	// 		break;
+	// 	case MOVE_DOWN:
+	// 		position.y = std::min(position.y + Velocity, nextTile->GetPosition().y * Tile::Height);
+	// 		break;
+	// 	case MOVE_LEFT:
+	// 		position.x = std::max(position.x - Velocity, nextTile->GetPosition().x * Tile::Width);
+	// 		break;
+	// 	case MOVE_RIGHT:
+	// 		position.x = std::min(position.x + Velocity, nextTile->GetPosition().x * Tile::Width);
+	// 		break;
+	// 	}
+
+	// 	collider.x = position.x;
+	// 	collider.y = position.y;
+
+	// 	if ((moveDir == MOVE_DOWN || moveDir == MOVE_UP) && position.y == nextTile->GetPosition().y * Tile::Height)
+	// 		SetTile(nextTile);
+
+	// 	if ((moveDir == MOVE_LEFT || moveDir == MOVE_RIGHT) && position.x == nextTile->GetPosition().x * Tile::Width)
+	// 		SetTile(nextTile);
+	// }
+	if (position.x%til_DIM || position.y%til_DIM) TryToMove(curr_Dir);
+	else if (!TryToMove(next_Dir)){
+		TryToMove(curr_Dir);
+	}
+	else{
+		curr_Dir = next_Dir;
+	}
+}
+
+void GameObject::render()
+{
+	SDL_Rect* animClip = NULL;
+
+	switch (curr_Dir)
+	{
+	case MOVE_UP:
+		animClip = &upAnimClips[frame];
+		break;
+	case MOVE_DOWN:
+		animClip = &downAnimClips[frame];
+		break;
+	case MOVE_LEFT:
+		animClip = &leftAnimClips[frame];
+		break;
+	case MOVE_RIGHT:
+		animClip = &rightAnimClips[frame];
+		break;
+	}
+    dest.x = position.x;
+    dest.y = position.y;
+	std::cout << position.x << " " << position.y << std::endl;
+    SDL_RenderCopy(Game::gameRenderer, objTexture, animClip, &dest);
+	//pacmanTexture->Render(position.x, position.y, animClip);
+}
+
+void GameObject::Delete()
+{
+	// Calling the base function
+	toDelete_pac = true;
+
+	//currTile->SetPacman(NULL);
+}
+
+MoveDirection GameObject::GetMoveDirection()
+{
+	return moveDir;
+}
+
+SDL_Rect GameObject::GetCollider()
+{
+	return collider;
+}
+
+// SDL_Point GameObject::GetPosition()
+// {
+// 	return position;
+// }
+
+// Tile* GameObject::GetTile()
+// {
+// 	return currTile;
+// }
+
+// Tile* GameObject::GetNextTile()
+// {
+// 	return nextTile;
+// }
+
+bool GameObject::IsMoving()
+{
+	return moving;
 }

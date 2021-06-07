@@ -1,8 +1,12 @@
 
-#include "../Resources/Game/TextureManager.hpp"
 #include "../Resources/Game/Map.hpp"
+#include "../Resources/Game/Map.hpp"
+#include "../Resources/Game/Game.hpp"
+#include "../Resources/Game/GameObject.hpp"
+#include "../Resources/Game/TileGraph.hpp"
+#include "../Resources/Game/Tile.hpp"
 
-const char *background_file = "../Resources/LOR.jpg";
+const char *background_file = "../Resources/LOR.bmp";
 const char *tile_file = "../Resources/tile.bmp";
 const char *mazeFile = "../outputs/matrix.out";
 const int TILE_DIM = 32;
@@ -21,8 +25,8 @@ Map::Map(){
     src.x = src.h = src.w = src.y = 0;
     dest.x = dest.y = 0;
     dest.h = dest.w = TILE_DIM;
-    backGround = TextureManager::LoadTexture(background_file, false);
-    TileTexture = TextureManager::LoadTexture(tile_file, true);
+    backGround = TextureManager::LoadTexture(background_file);
+    TileTexture = TextureManager::LoadTexture(tile_file);
 
 }
 

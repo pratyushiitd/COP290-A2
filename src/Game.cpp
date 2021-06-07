@@ -1,7 +1,5 @@
 #include "../Resources/Game/Game.hpp"
-#include "../Resources/Game/TextureManager.hpp"
 #include "../Resources/Game/GameObject.hpp"
-
 SDL_Renderer* Game::gameRenderer = nullptr;
 GameObject* player = nullptr;
 
@@ -29,7 +27,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     }
     SDL_RenderClear(gameRenderer);
     SDL_SetRenderDrawColor(gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    player = new GameObject("../Resources/player.jpg");
+    player = new GameObject("../Resources/PacMan.bmp");
     return;
 }
 
@@ -66,7 +64,7 @@ void Game::clear(){
     gameRenderer = NULL;
     player->Destroy();
     //Quit SDL subsystems
-    IMG_Quit();
+    //IMG_Quit();
     SDL_Quit();
     std::cout << "Game Exit Success!" << std::endl;
 }
@@ -95,3 +93,50 @@ void Game::closeRequest(){
 
 
 
+
+
+
+/*
+
+
+
+
+		// Remove all objects marked for deletion from gameobjects vector
+		for (unsigned int i = 0; i < gGameObjectList.size(); i++) {
+			if (gGameObjectList[i]->ToDelete()) {
+				delete gGameObjectList[i];
+				removeFromVector(gGameObjectList, *gGameObjectList[i]);
+			}
+		}
+
+		//Handle events on queue
+		while (SDL_PollEvent(&e) != 0)
+		{
+			//User requests quit
+			if (e.type == SDL_QUIT)
+			{
+				quit = true;
+			}
+
+			// Handle the event for all the objects
+			for (unsigned int i = 0; i < gGameObjectList.size(); i++)
+				gGameObjectList[i]->HandleEvents(&e);
+		}
+
+		// Update the logic on all objects
+		for (unsigned int i = 0; i < gGameObjectList.size(); i++)
+			gGameObjectList[i]->Update();
+
+		// Fill the screen with black
+		SDL_SetRenderDrawColor(gRenderer, 0x00, 0x00, 0x00, 0xFF);
+		SDL_RenderClear(gRenderer);
+
+		// Render all the objects
+		for (unsigned int i = 0; i < gGameObjectList.size(); i++)
+			gGameObjectList[i]->Render();
+
+		//Update the surface
+		SDL_RenderPresent(gRenderer);
+
+
+*/

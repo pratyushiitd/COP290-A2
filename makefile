@@ -8,6 +8,7 @@ TARGET = main
 
 BUILD_DIR = ./build
 LIBS:= -lSDL2 -lSDL2_image #`sdl2-config --cflags --libs`
+LIBSNEW = -I include -lSDL2 `sdl2-config --cflags --libs` -std=c++17
 SRC_DIR= ./src
 #COMPILER_FLAGS specifies the additional compilation options we're using
 # -w suppresses all warnings
@@ -27,7 +28,7 @@ clean:
 build:
 	@echo Building project :
 # mkdir $(BUILD_DIR)
-	cd $(SRC_DIR); $(CC) -o .$(BUILD_DIR)/$(TARGET) $(OBJS) $(LIBS) $(CFLAGS)
+	cd $(SRC_DIR); $(CC) -o .$(BUILD_DIR)/$(TARGET) $(OBJS) $(LIBSNEW) $(CFLAGS)
 	@echo Generated the executable without errors ...
 
 run:

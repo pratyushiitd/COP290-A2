@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 #define UP 0	//-y
 #define DOWN 1	//+y
 #define LEFT 2	//-x

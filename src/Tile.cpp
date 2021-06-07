@@ -1,15 +1,16 @@
 #include "../Resources/Game/Tile.hpp"
 
 Tile::Tile(){
-    this->position = {0,0};
-
+    this->position.x = 0;
+    this->position.y = 0;
 }
 
 Tile::Tile(int x, int y){
-    this->position = {x,y};
+    this->position.x = x;
+    this->position.y = y;
 }
 
-SDL_Point Tile::GetPosition(){
+SDL_Point Tile::GetPosition(){  
     return position;
 }
 void Tile::SetPos(int x, int y)

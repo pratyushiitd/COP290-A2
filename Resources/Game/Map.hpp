@@ -1,5 +1,5 @@
 #pragma once
-#include "Game.hpp"
+#include "TextureManager.hpp"
 
 const int x_size = 37;
 const int y_size = 37;

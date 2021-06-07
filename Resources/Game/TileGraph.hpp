@@ -3,10 +3,11 @@
 #include <array>
 #include "Tile.hpp"
 
+
 class TileGraph
 {
 public:
-	TileGraph();
+	TileGraph(int h, int w);
 	~TileGraph();
 
 	// (Re)Creates all tiles
@@ -15,8 +16,8 @@ public:
 	// Returns tile at given position
 	Tile* GetTileAt(int x, int y);
 
-	std::array<Tile*, 4> GetNeighbours(Tile* tile);
-	std::array<Tile*, 8> GetNeighboursDiag(Tile* tile);
+	// std::array<Tile*, 4> GetNeighbours(Tile* tile);
+	// std::array<Tile*, 8> GetNeighboursDiag(Tile* tile);
 
 private:
 	Tile* tiles;

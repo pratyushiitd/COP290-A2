@@ -1,6 +1,8 @@
-#include "../Resources/Game/TextureManager.hpp"
 #include "../Resources/Game/Map.hpp"
+#include "../Resources/Game/Game.hpp"
 #include "../Resources/Game/GameObject.hpp"
+#include "../Resources/Game/TileGraph.hpp"
+#include "../Resources/Game/Tile.hpp"
 
 Game *game = nullptr;
 Map *map = nullptr;
@@ -39,7 +41,8 @@ int main(int argc, char *argv[]){
 		//Update the surface
 		SDL_RenderPresent(game->gameRenderer);
     }
-    SDL_Delay(2000);
+    //SDL_Delay(2000);
     game->clear();
+
     return 0;
 }

@@ -1,5 +1,6 @@
 #pragma once
 #include <SDL2/SDL.h>
+#include "TextureManager.hpp"
 
 class Tile
 {
@@ -12,6 +13,8 @@ private:
     */
 public:
 	Tile();
+    static const int Width = 32;
+    static const int Height = 32;
 	Tile(int x, int y);
     SDL_Point GetPosition();
     void SetPos(int x, int y);
