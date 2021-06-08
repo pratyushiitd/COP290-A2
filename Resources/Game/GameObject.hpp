@@ -1,7 +1,7 @@
 #pragma once
 #include "Movedirection.hpp"
 #include "TileGraph.hpp"
-
+#include <vector>
 class GameObject
 {
 private:
@@ -72,16 +72,7 @@ public:
     MoveDirection GetMoveDirection();
 
     SDL_Rect GetCollider();
-
-    // // Returns position
-	// SDL_Point GetPosition();
-    // // Returns pacman's tile
-	// Tile* GetTile();
-
-	// // Returns the tile which pacman is going to
-	// Tile* GetNextTile();
-
-	// Returns true if pacman is moving
+	
 	bool IsMoving();
 
 	void Delete();

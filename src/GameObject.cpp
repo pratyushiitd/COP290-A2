@@ -29,7 +29,7 @@ GameObject::GameObject(const char* texSheet)
 	collider.w = Width;
 	collider.h = Height;
 
-	moveDir = MOVE_RIGHT;
+	curr_Dir = MOVE_RIGHT;
 	nextDir = MOVE_RIGHT;
 
     dest.w = til_DIM;
@@ -42,20 +42,6 @@ GameObject::GameObject(const char* texSheet)
 	LoadMedia();
 }
 
-// void GameObject::SetTile(Tile* newTile)
-// {
-// 	if (currTile != NULL)
-// 		currTile->SetPacman(NULL);
-
-// 	currTile = newTile;
-	
-// 	if (currTile != NULL) {
-// 		currTile->SetPacman(this);
-
-// 		position.x = currTile->GetPosition().x * Tile::Width;
-// 		position.y = currTile->GetPosition().y * Tile::Height;
-// 	}
-// }
 
 void GameObject::SetNextTile(Tile* newNextTile)
 {
@@ -147,25 +133,16 @@ void GameObject::handleEvent(SDL_Event e)
 bool GameObject::TryToMove(MoveDirection direction)
 {
 	// Get destination tile depening on the direction of movment
-	// switch (direction)
-	// {
-	// case MOVE_UP:
-	// 	destTile = Tgraph->GetTileAt(currTile->GetPosition().x, currTile->GetPosition().y - 1);
-	// 	break;
-	// case MOVE_DOWN:
-	// 	destTile = Tgraph->GetTileAt(currTile->GetPosition().x, currTile->GetPosition().y + 1);
-	// 	break;
-	// case MOVE_LEFT:
-	// 	destTile = Tgraph->GetTileAt(currTile->GetPosition().x - 1, currTile->GetPosition().y);
-	// 	break;
-	// case MOVE_RIGHT:
-	// 	destTile = Tgraph->GetTileAt(currTile->GetPosition().x + 1, currTile->GetPosition().y);
-	// 	break;
-	// }
+
+	int next_posx;
+	int next_posy;
 	switch (direction)
 	{
 		case MOVE_UP:
-			if (Tgraph->GetTileAt(position.x, position.y - Velocity + 1)->getType() == 'w'){
+			next_posx = position.x;
+			next_posy = position.y - Velocity + 1;
+			Tgraph->remove_food(next_posx, next_posy);
+			if (Tgraph->GetTileAt(next_posx, next_posy)->getType() == 'w'){
 					//|| Tgraph->GetTileAt(position.x + til_DIM, position.y - Velocity)->getType() == 'w'){
 						return false;
 						break;
@@ -175,7 +152,10 @@ bool GameObject::TryToMove(MoveDirection direction)
 				return true;
 			}
 		case MOVE_DOWN:
-			if (Tgraph->GetTileAt(position.x, position.y + Velocity -1+ til_DIM)->getType() == 'w'){
+			next_posx = position.x;
+			next_posy = position.y + Velocity -1+ til_DIM;
+			Tgraph->remove_food(next_posx, next_posy);
+			if (Tgraph->GetTileAt(next_posx, next_posy)->getType() == 'w'){
 					//|| Tgraph->GetTileAt(position.x + til_DIM, position.y + Velocity + til_DIM)->getType() == 'w'){
 						return false;
 						break;
@@ -185,7 +165,10 @@ bool GameObject::TryToMove(MoveDirection direction)
 				return true;
 			}
 		case MOVE_RIGHT:
-			if (Tgraph->GetTileAt(position.x + Velocity-1 + til_DIM, position.y)->getType() == 'w'){
+			next_posx = position.x + Velocity-1 + til_DIM;
+			next_posy = position.y;
+			Tgraph->remove_food(next_posx, next_posy);
+			if (Tgraph->GetTileAt(next_posx, next_posy)->getType() == 'w'){
 					//|| Tgraph->GetTileAt(position.x + Velocity + til_DIM, position.y + til_DIM)->getType() == 'w'){
 						return false;
 						break;
@@ -195,7 +178,10 @@ bool GameObject::TryToMove(MoveDirection direction)
 				return true;
 			}
 		case MOVE_LEFT:
-			if (Tgraph->GetTileAt(position.x - Velocity+1, position.y)->getType() == 'w'){
+			next_posx = position.x - Velocity+1;
+			next_posy = position.y;
+			Tgraph->remove_food(next_posx, next_posy);
+			if (Tgraph->GetTileAt(next_posx, next_posy)->getType() == 'w'){
 					//|| Tgraph->GetTileAt(position.x - Velocity, position.y + til_DIM)->getType() == 'w'){
 						return false;
 						break;
@@ -206,20 +192,6 @@ bool GameObject::TryToMove(MoveDirection direction)
 			}
 
 	}
-
-	// If the tile's NULL, we can't go there
-	// if (destTile == NULL) {
-	// 	SetNextTile(NULL);
-	// 	return false;
-	// }
-
-	// // If the tile has got a wall in it, we can't go there
-	// if (destTile->getType() == 'w') {
-	// 	SetNextTile(NULL);
-	// 	return false;
-	// }
-
-	//SetNextTile(destTile);
 
 	return false;
 }
@@ -247,46 +219,6 @@ void GameObject::update()
 			frame = 0;
 			frameCount = 0;
 		}
-	// }
-	
-	// Change of tile/movement
-	// if (nextTile == currTile || nextTile == NULL) {
-	// 	if (nextDir != moveDir && TryToMove(nextDir))
-	// 		moveDir = nextDir;
-	// 	else
-	// 		TryToMove(moveDir);
-
-	// 	if (nextTile == NULL)
-	// 		moving = false;
-// 	else	
-	// 		moving = true;
-	// }
-	// else {
-	// 	switch (moveDir)
-	// 	{
-	// 	case MOVE_UP:
-	// 		position.y = std::max(position.y - Velocity, nextTile->GetPosition().y * Tile::Height);
-	// 		break;
-	// 	case MOVE_DOWN:
-	// 		position.y = std::min(position.y + Velocity, nextTile->GetPosition().y * Tile::Height);
-	// 		break;
-	// 	case MOVE_LEFT:
-	// 		position.x = std::max(position.x - Velocity, nextTile->GetPosition().x * Tile::Width);
-	// 		break;
-	// 	case MOVE_RIGHT:
-	// 		position.x = std::min(position.x + Velocity, nextTile->GetPosition().x * Tile::Width);
-	// 		break;
-	// 	}
-
-	// 	collider.x = position.x;
-	// 	collider.y = position.y;
-
-	// 	if ((moveDir == MOVE_DOWN || moveDir == MOVE_UP) && position.y == nextTile->GetPosition().y * Tile::Height)
-	// 		SetTile(nextTile);
-
-	// 	if ((moveDir == MOVE_LEFT || moveDir == MOVE_RIGHT) && position.x == nextTile->GetPosition().x * Tile::Width)
-	// 		SetTile(nextTile);
-	// }
 	if (position.x%til_DIM || position.y%til_DIM) TryToMove(curr_Dir);
 	else if (!TryToMove(next_Dir)){
 		TryToMove(curr_Dir);
@@ -319,6 +251,7 @@ void GameObject::render()
     dest.y = position.y;
 	std::cout << position.x << " " << position.y << std::endl;
     SDL_RenderCopy(Game::gameRenderer, objTexture, animClip, &dest);
+	Tgraph->render_food();
 	//pacmanTexture->Render(position.x, position.y, animClip);
 }
 
@@ -340,20 +273,6 @@ SDL_Rect GameObject::GetCollider()
 	return collider;
 }
 
-// SDL_Point GameObject::GetPosition()
-// {
-// 	return position;
-// }
-
-// Tile* GameObject::GetTile()
-// {
-// 	return currTile;
-// }
-
-// Tile* GameObject::GetNextTile()
-// {
-// 	return nextTile;
-// }
 
 bool GameObject::IsMoving()
 {
