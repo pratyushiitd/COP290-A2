@@ -2,6 +2,7 @@
 #include "Movedirection.hpp"
 #include "TileGraph.hpp"
 #include <vector>
+
 class GameObject
 {
 private:
@@ -72,7 +73,7 @@ public:
     MoveDirection GetMoveDirection();
 
     SDL_Rect GetCollider();
-	
+
 	bool IsMoving();
 
 	void Delete();

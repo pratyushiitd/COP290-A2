@@ -1,7 +1,10 @@
 #include "../Resources/Game/Game.hpp"
-#include "../Resources/Game/GameObject.hpp"
+#include"../Resources/Game/GameObject.hpp"
 SDL_Renderer* Game::gameRenderer = nullptr;
 GameObject* player = nullptr;
+const int SCREEN_WIDTH  = 1184;
+const int SCREEN_HEIGHT  = 1184;
+const int til_DIM  = 32;
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool full_scr){
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0){
@@ -27,6 +30,7 @@ void Game::init(const char *title, int xpos, int ypos, int width, int height, bo
     }
     SDL_RenderClear(gameRenderer);
     SDL_SetRenderDrawColor(gameRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+    //Tgraph = new TileGraph(SCREEN_HEIGHT / til_DIM, SCREEN_WIDTH / til_DIM);
     player = new GameObject("../Resources/PacMan.bmp");
     return;
 }

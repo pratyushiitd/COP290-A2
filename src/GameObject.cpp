@@ -1,17 +1,17 @@
 #include "../Resources/Game/GameObject.hpp"
 
-int SCR_WIDTH = 1184;
-int SCR_HEIGHT = 1184;
-int til_DIM = 32;
+const int SCREEN_WIDTH  = 1184;
+const int SCREEN_HEIGHT  = 1184;
+const int til_DIM  = 32;
 
 TileGraph* Tgraph = nullptr;
 GameObject::GameObject(const char* texSheet)
 {
     objTexture = TextureManager::LoadTexture(texSheet); // Pacman texture
 
-	Tgraph = new TileGraph(SCR_HEIGHT / til_DIM, SCR_WIDTH / til_DIM); // Initialize the Tile Map for Player movement
+	Tgraph = new TileGraph(SCREEN_HEIGHT / til_DIM, SCREEN_WIDTH / til_DIM); // Initialize the Tile Map for Player movement
 
-    currTile = Tgraph->GetTileAt(32, 32); // Initialize the starting tile
+    currTile = Tgraph->GetTileAt(til_DIM, til_DIM); // Initialize the starting tile
 	nextTile = NULL;
 
 	if (currTile != NULL) {
@@ -22,8 +22,8 @@ GameObject::GameObject(const char* texSheet)
 		//Starting coordinates
 	}
 	else {
-		position.x = 32;
-		position.y = 32;
+		position.x = til_DIM;
+		position.y = til_DIM;
 	}
 
 	collider.w = Width;
@@ -57,46 +57,46 @@ bool GameObject::LoadMedia()
 	// Leftward movment animation clips
 	leftAnimClips[0].x = 0;
     leftAnimClips[0].y = 0;
-    leftAnimClips[0].w = 32;
-    leftAnimClips[0].h = 32;
+    leftAnimClips[0].w = til_DIM;
+    leftAnimClips[0].h = til_DIM;
 
-    leftAnimClips[1].x = 32;
+    leftAnimClips[1].x = til_DIM;
     leftAnimClips[1].y = 0;
-    leftAnimClips[1].w = 32;
-    leftAnimClips[1].h = 32;
+    leftAnimClips[1].w = til_DIM;
+    leftAnimClips[1].h = til_DIM;
 
     // Right movement animation clips
     rightAnimClips[0].x = 0;
-    rightAnimClips[0].y = 32;
-    rightAnimClips[0].w = 32;
-    rightAnimClips[0].h = 32;
+    rightAnimClips[0].y = til_DIM;
+    rightAnimClips[0].w = til_DIM;
+    rightAnimClips[0].h = til_DIM;
 
-    rightAnimClips[1].x = 32;
-    rightAnimClips[1].y = 32;
-    rightAnimClips[1].w = 32;
-    rightAnimClips[1].h = 32;
+    rightAnimClips[1].x = til_DIM;
+    rightAnimClips[1].y = til_DIM;
+    rightAnimClips[1].w = til_DIM;
+    rightAnimClips[1].h = til_DIM;
 
     // Downward movement animation clips
-    downAnimClips[0].x = 64;
+    downAnimClips[0].x = 2*til_DIM;
     downAnimClips[0].y = 0;
-    downAnimClips[0].w = 32;
-    downAnimClips[0].h = 32;
+    downAnimClips[0].w = til_DIM;
+    downAnimClips[0].h = til_DIM;
 
-    downAnimClips[1].x = 96;
+    downAnimClips[1].x = 3*til_DIM;
     downAnimClips[1].y = 0;
-    downAnimClips[1].w = 32;
-    downAnimClips[1].h = 32;
+    downAnimClips[1].w = til_DIM;
+    downAnimClips[1].h = til_DIM;
 
     // Upward movement animation clips
-    upAnimClips[0].x = 64;
-    upAnimClips[0].y = 32;
-    upAnimClips[0].w = 32;
-    upAnimClips[0].h = 32;
+    upAnimClips[0].x = 2*til_DIM;
+    upAnimClips[0].y = til_DIM;
+    upAnimClips[0].w = til_DIM;
+    upAnimClips[0].h = til_DIM;
 
-    upAnimClips[1].x = 96;
-    upAnimClips[1].y = 32;
-    upAnimClips[1].w = 32;
-    upAnimClips[1].h = 32;
+    upAnimClips[1].x = 3*til_DIM;
+    upAnimClips[1].y = til_DIM;
+    upAnimClips[1].w = til_DIM;
+    upAnimClips[1].h = til_DIM;
 
 	return true;
 }

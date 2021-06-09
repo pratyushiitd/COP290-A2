@@ -4,10 +4,12 @@
 #include "../Resources/Game/TileGraph.hpp"
 #include "../Resources/Game/Tile.hpp"
 
+const int SCREEN_WIDTH  = 1184;
+const int SCREEN_HEIGHT  = 1184;
+const int til_DIM  = 32;
+
 Game *game = nullptr;
 Map *map = nullptr;
-int SCREEN_WIDTH = 1184;
-int SCREEN_HEIGHT = 1184;
 const int FPS = 30;
 const int frameDelay = 1000 / FPS;
 Uint32 frameStart = 0;

@@ -3,7 +3,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <bits/stdc++.h>
+#include <array>
+#include <iostream>
+//#include <bits/stdc++.h>
 #define UP 0	//-y
 #define DOWN 1	//+y
 #define LEFT 2	//-x
@@ -210,7 +212,14 @@ void savebmp(int xspecial, int yspecial)
 	int x, y, n;
 	int width = (xsize - 1) * 2 - 1;
 	int height = (ysize - 1) * 2 - 1;
-	int arr[height][width] = {0};
+	int arr[height][width];
+	for (int i1 = 0; i1 < height; i1++){
+		for (int j = 0; j < width; j++)
+		{
+			arr[i1][j] = 0;
+		}
+		
+	}
 	extrabytes = (4 - ((width * 3) % 4)) % 4;
 
 	char filename[200];

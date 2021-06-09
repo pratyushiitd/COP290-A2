@@ -36,5 +36,5 @@ run:
 
 .PHONY: all build
 maze:
-	g++ -o ./build/maze-generator ./src/maze-generator.cpp
+	g++ -o ./build/maze-generator ./src/maze-generator.cpp -std=c++17
 	cd ./build; ./maze-generator

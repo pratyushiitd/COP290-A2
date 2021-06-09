@@ -33,8 +33,8 @@ TileGraph::TileGraph(int h, int w)
             }
         }
     }
-	cher.w = 32;
-	cher.h = 32;
+	cher.w = tilDim;
+	cher.h = tilDim;
 	width = w;
 	height = h;
 }
@@ -72,7 +72,7 @@ void TileGraph::render_food()
 
 void TileGraph::remove_food(int x, int y)
 {
-	std::cout << x << " " << y  << "to be removed" << std::endl;
+	//std::cout << x << " " << y  << "to be removed" << std::endl;
 	std::vector<std::pair<int, int> >::iterator it;
 	for (it = food.begin(); it != food.end(); it++){
 		if (((*it).first == x / tilDim) && ((*it).second == y / tilDim)){
