@@ -21,6 +21,16 @@ int main(int argc, char *argv[]){
     game->init("Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, false);
     std::cout << "Game Initialization Successfull..." << std::endl;
     map = new Map();
+    SDL_Event e;
+    bool choose = false;
+    while(!choose){
+        map->display(game->gameRenderer);
+        while(SDL_PollEvent(&e)){
+            if (e.type == SDL_QUIT) {game->clear();game->running = false;choose = true; break;}
+            choose = map->HandleTheme(e);
+        }
+        
+    }
     map->LoadMaze();
     std::cout << "Maze Loading Successfull..." << std::endl;
     
