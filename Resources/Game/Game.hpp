@@ -8,13 +8,12 @@
 #include <string>
 #include <iostream>
 #include <fstream> 
+#include "Constants.hpp"
 
 class Game
 {
 private:
     SDL_Window *gameWindow;
-
-    int imgFlags;
     int count;
 public:
     static SDL_Renderer *gameRenderer;

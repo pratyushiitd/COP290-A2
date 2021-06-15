@@ -1,8 +1,9 @@
 #pragma once
 #include "TextureManager.hpp"
+#include "Constants.hpp"
 
-const int x_size = 37;
-const int y_size = 37;
+const int x_size = X_SIZE;
+const int y_size = Y_SIZE;
 class Map
 {
 private:
@@ -11,7 +12,7 @@ private:
     SDL_Texture* backGround;
     SDL_Texture* TileTexture;
     SDL_Rect Button;
-    int array_2d[x_size][y_size];
+    //int array_2d[y_size][x_size];
     int curr_press;
     int total_themes;
 public:

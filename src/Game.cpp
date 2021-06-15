@@ -2,9 +2,6 @@
 #include"../Resources/Game/GameObject.hpp"
 SDL_Renderer* Game::gameRenderer = nullptr;
 GameObject* player = nullptr;
-const int SCREEN_WIDTH  = 1184;
-const int SCREEN_HEIGHT  = 1184;
-const int til_DIM  = 32;
 
 void Game::init(const char *title, int xpos, int ypos, int width, int height, bool full_scr){
     if (SDL_Init(SDL_INIT_EVERYTHING) < 0){

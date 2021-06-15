@@ -1,15 +1,13 @@
 #include "../Resources/Game/GameObject.hpp"
 
-const int SCREEN_WIDTH  = 1184;
-const int SCREEN_HEIGHT  = 1184;
-const int til_DIM  = 32;
+const int til_DIM  = TILE_SIZE;
 
 TileGraph* Tgraph = nullptr;
 GameObject::GameObject(const char* texSheet)
 {
     objTexture = TextureManager::LoadTexture(texSheet); // Pacman texture
 
-	Tgraph = new TileGraph(SCREEN_HEIGHT / til_DIM, SCREEN_WIDTH / til_DIM); // Initialize the Tile Map for Player movement
+	Tgraph = new TileGraph(Y_SIZE, X_SIZE); // Initialize the Tile Map for Player movement
 
     currTile = Tgraph->GetTileAt(til_DIM, til_DIM); // Initialize the starting tile
 	nextTile = NULL;

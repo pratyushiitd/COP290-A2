@@ -4,9 +4,6 @@
 #include "../Resources/Game/TileGraph.hpp"
 #include "../Resources/Game/Tile.hpp"
 
-const int SCREEN_WIDTH  = 1184;
-const int SCREEN_HEIGHT  = 1184;
-const int til_DIM  = 32;
 
 Game *game = nullptr;
 Map *map = nullptr;
@@ -16,10 +13,10 @@ Uint32 frameStart = 0;
 int frameTime;
 
 int main(int argc, char *argv[]){
-
     game = new Game();
     game->init("Game Window", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, SCREEN_WIDTH, SCREEN_HEIGHT, false);
     std::cout << "Game Initialization Successfull..." << std::endl;
+    //std::cout << Y_SIZE << " " << X_SIZE << std::endl;
     map = new Map();
     SDL_Event e;
     bool choose = false;
@@ -33,9 +30,6 @@ int main(int argc, char *argv[]){
     }
     map->LoadMaze();
     std::cout << "Maze Loading Successfull..." << std::endl;
-    
-    // SDL_RenderPresent(game->gameRenderer);
-
     while(game->isRunning()){
 
         //frameStart = SDL_GetTicks();

@@ -2,7 +2,7 @@
 #include "Movedirection.hpp"
 #include "TileGraph.hpp"
 #include <vector>
-
+#include "Constants.hpp"
 class GameObject
 {
 private:
@@ -12,10 +12,10 @@ private:
     SDL_Rect src, dest;
     MoveDirection curr_Dir = MOVE_STILL;
     MoveDirection next_Dir = MOVE_STILL;
-    static const int Width = 32;
-	static const int Height = 32;
-	static const int MoveFrames = 2;
-    static const int Velocity = 2;
+	int Width = TILE_SIZE;
+	int Height = TILE_SIZE;
+	int MoveFrames = MOVE_FRAMES;
+    int Velocity = VELOCITY;
 
 	// Trys to move the pacman in desired direction
 	// Returns true if successful, false otherwise

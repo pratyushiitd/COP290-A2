@@ -6,6 +6,7 @@
 #include <array>
 #include <iostream>
 //#include <bits/stdc++.h>
+
 #define UP 0	//-y
 #define DOWN 1	//+y
 #define LEFT 2	//-x

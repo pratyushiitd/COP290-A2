@@ -2,31 +2,31 @@
 
 #include <algorithm>
 #include <iostream>
-int tilDim = 32;
+int tilDim = TILE_SIZE;
 
-TileGraph::TileGraph(int h, int w)
+TileGraph::TileGraph(int y_size, int x_size)
 {
 	// Create a dynamic array of Tiles
-	tiles = new Tile[w * h];
+	tiles = new Tile[x_size * y_size];
 	cherry_text = TextureManager::LoadTexture("../Resources/cherry.bmp");
 	// Set position of all tiles
     freopen("../outputs/matrix.out", "r", stdin);
-    for (int y = 0; y < h; y++)
+    for (int y = 0; y < y_size; y++)
     {
-        for (int x = 0; x < w; x++)
+        for (int x = 0; x < x_size; x++)
         {
             int kind;
-            tiles[x + (y*w)].SetPos(x, y);
+            tiles[x + (y*x_size)].SetPos(x, y);
             std::cin >> kind;
             switch (kind)
             {
             case 1:
                 /* code */
-                tiles[x+(y*w)].SetType('r');
+                tiles[x+(y*x_size)].SetType('r');
 				food.push_back(std::make_pair(x, y));
                 break;
             case 0:
-                tiles[x+(y*w)].SetType('w');
+                tiles[x+(y*x_size)].SetType('w');
                 break;
             default:
                 break;
@@ -35,8 +35,8 @@ TileGraph::TileGraph(int h, int w)
     }
 	cher.w = tilDim;
 	cher.h = tilDim;
-	width = w;
-	height = h;
+	width = x_size;
+	height = y_size;
 }
 
 
