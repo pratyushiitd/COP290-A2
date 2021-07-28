@@ -20,7 +20,7 @@ Libraries:
 
 
 ## Directory Structure
-
+``` 
 ├── build                       # Compiled output
 │   ├── main
 │   ├── MAZE_152x122_n18000.bmp
@@ -82,7 +82,7 @@ Libraries:
     ├── Tile.cpp
     ├── TileGraph.cpp
     └── weapon.cpp
-
+```
 
 ## TODO:
 
