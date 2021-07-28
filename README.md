@@ -2,25 +2,31 @@
 
 2 Player maze game with SDL in C++ and sockets
 
+Choose a theme
+
+![img](image/README/1627492470870.png)
+
+![img](image/README/1627492486856.png)
 
 ## Installation
 
 1. To install clone the repo and run `make all`
 2. Debugging:
-    1. To generate random maze `make maze`
-    2. To eject the repo `make clean`
-    3. To test build `make build`
-    1. To run `make run`
+   1. To generate random maze `make maze`
+   2. To eject the repo `make clean`
+   3. To test build `make build`
+   4. To run `make run`
 
 Libraries:
+
 * sdl2 `brew install sdl2`
 * sdl2_image `brew install sdl2_image`
 * sdl2_net `brew install sdl2_net`
 * sdl2_ttf `brew install sdl2_ttf`
 
-
 ## Directory Structure
-``` 
+
+```
 ├── build                       # Compiled output
 │   ├── main
 │   ├── MAZE_152x122_n18000.bmp
