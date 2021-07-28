@@ -38,6 +38,8 @@ void weapon::fire()
     this->start = stop;
     cout << "shoot";
 }
+
+// testing code. remove afterwards.
 int main(int argc, char const *argv[])
 {
     weapon gun = weapon(10, 10, 10, 5);
